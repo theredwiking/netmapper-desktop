@@ -13,7 +13,7 @@ import file.SaveData
 private var scan: Boolean = false;
 
 @Composable
-fun topBar(onMachineChange: (String) -> Unit, onStartChange: (Boolean) -> Unit, onData: (SaveData) -> Unit) {
+fun navBar(onMachineChange: (String) -> Unit, onStartChange: (Boolean) -> Unit, onData: (SaveData) -> Unit) {
     var read: Boolean by remember { mutableStateOf(false) };
     var error: String by remember { mutableStateOf("") };
     Row(modifier = Modifier.fillMaxWidth()) {
