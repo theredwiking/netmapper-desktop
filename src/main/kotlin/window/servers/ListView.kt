@@ -31,7 +31,7 @@ fun serverList(servers: List<ServerInfo>) {
     Column(modifier = Modifier.border(width = Dp.Hairline, shape = RoundedCornerShape(1.dp), color = Color.Black).fillMaxHeight()) {
         paginationNav(page) {page = it};
         Divider(modifier = Modifier.widthIn(100.dp, 180.dp), color = Color.Black)
-        Text(" Page ${page.page} of $pages")
+        Text(color = Color.White, text = " Page ${page.page} of $pages")
         Divider(modifier = Modifier.widthIn(100.dp, 180.dp), color = Color.Black)
         listServers(servers, page);
     }
@@ -43,7 +43,7 @@ private fun listServers(servers: List<ServerInfo>, page: Pagination) {
         for (i in page.start..page.end) {
             val testInteract = remember { MutableInteractionSource() };
             val isHover by testInteract.collectIsHoveredAsState();
-            Text(modifier = Modifier.padding(6.dp).hoverable(testInteract, true), text = " Ip: ${
+            Text(modifier = Modifier.padding(6.dp).hoverable(testInteract, true), color = Color.White, text = " Ip: ${
                 try {
                     servers[i].ip
                 } catch (e: Exception) {
@@ -51,7 +51,7 @@ private fun listServers(servers: List<ServerInfo>, page: Pagination) {
                 }
             }");
             if(isHover) {
-                Text(color = Color.Black, fontFamily = FontFamily.Monospace, text = " Ports: ${servers[i].ports}")
+                Text(color = Color.White, fontFamily = FontFamily.Monospace, text = " Ports: ${servers[i].ports}")
             }
         }
     }
