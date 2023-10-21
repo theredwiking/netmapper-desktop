@@ -5,6 +5,7 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import file.SaveData
 import network.Vlan
@@ -31,7 +32,7 @@ private fun subnetInfo(vlans: List<Vlan>) {
             if(subnets.isNotEmpty()) {
                 showList(subnets);
             } else {
-                Text("Couldn't find any networks");
+                Text(color = Color.White, text = "Couldn't find any networks");
             }
         }
     };
@@ -42,6 +43,6 @@ fun subnetDisplay(display: Boolean, data: SaveData) {
     if (display) {
         subnetInfo(data.networks);
     } else {
-        Text(modifier = Modifier.padding(2.dp), text = "No info to display");
+        Text(modifier = Modifier.padding(2.dp), color = Color.White, text = "No info to display");
     }
 }

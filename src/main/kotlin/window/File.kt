@@ -68,10 +68,8 @@ fun saveAction(networks: List<Vlan>, servers: List<ServerInfo>) {
     }
 }
 
-@Composable
 fun vlanReadActions(onLoaded: (SaveData) -> Unit): String {
     var status = "";
-    Spacer(modifier = Modifier.width(10.dp))
     if(!read(filePicker(), onData = { onLoaded(it); })) {
         status = "Failed to read file"
     }
