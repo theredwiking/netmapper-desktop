@@ -1,5 +1,6 @@
 package window
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import network.Machine
 import network.deviceInfo
@@ -7,25 +8,21 @@ import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Window
 import file.SaveData
 
 private var scan: Boolean = false;
 
 @Composable
-fun navBar(onMachineChange: (String) -> Unit, onStartChange: (Boolean) -> Unit, onData: (SaveData) -> Unit) {
+fun navBar(onStartChange: (Boolean) -> Unit, onData: (SaveData) -> Unit) {
     var read: Boolean by remember { mutableStateOf(false) };
     var error: String by remember { mutableStateOf("") };
     Row(modifier = Modifier.fillMaxWidth()) {
-        Button(modifier = Modifier.width(200.dp).padding(2.dp), onClick =  {
-            val info: Machine = deviceInfo();
-            onMachineChange( "Os: ${info.os}\nIp: ${info.ip}\nName: ${info.name}");
-        }) {
-            Text("Load machine info");
-        }
-        Spacer(modifier = Modifier.width(10.dp))
-        Button(onClick = {
-            if(scan) {
+        Button(modifier = Modifier.padding(2.dp), onClick = {
+            if (scan) {
                 scan = false;
                 onStartChange(false);
             } else {
@@ -33,18 +30,26 @@ fun navBar(onMachineChange: (String) -> Unit, onStartChange: (Boolean) -> Unit, 
                 onStartChange(true);
             }
         }) {
-            Text("Scan for subnets");
+            Image(
+                painter = painterResource("search.svg"),
+                contentDescription = "Scan subnets",
+                modifier = Modifier.width(20.dp).height(20.dp)
+            )
         }
         Spacer(modifier = Modifier.width(10.dp))
         Button(onClick = {
             read = true;
         }) {
-            Text("Read file");
+            Image(
+                painter = painterResource("open-file.svg"),
+                contentDescription = "Open file",
+                modifier = Modifier.width(20.dp).height(20.dp)
+            )
         }
-        if(read) {
-            error = vlanReadActions {onData(it); read = false; }
+        if (read) {
+            error = vlanReadActions { onData(it); read = false; }
         }
-        if(error.isNotEmpty()) {
+        if (error.isNotEmpty()) {
             Spacer(modifier = Modifier.width(10.dp));
             Text(error);
         }

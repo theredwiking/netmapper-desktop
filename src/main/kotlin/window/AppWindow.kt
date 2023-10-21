@@ -15,7 +15,6 @@ import window.vlan.subnetDisplay
 @Composable
 @Preview
 fun app() {
-    var machine: String by rememberSaveable { mutableStateOf("No information") };
     var scan: Boolean by rememberSaveable { mutableStateOf(false) };
     var data: SaveData by rememberSaveable { mutableStateOf(SaveData(emptyList(), emptyList())) };
     MaterialTheme {
@@ -24,17 +23,12 @@ fun app() {
                 TopAppBar(
                     backgroundColor = Color(0xFF1D1E2C)
                 ) {
-                    navBar(onMachineChange = { machine = it }, onStartChange = { scan = it }, onData = { data = it });
+                    navBar(onStartChange = { scan = it }, onData = { data = it });
                 }
             },
-            backgroundColor = Color(0xFF7E8287)
+            backgroundColor = Color(0xFF1D1E2C)
         ){
             Row(modifier = Modifier.fillMaxWidth()) {
-                Column {
-                    Text(modifier = Modifier.width(200.dp).padding(2.dp), text = machine)
-                    Text(modifier = Modifier.width(200.dp).padding(2.dp), text = "Vlans: ${data.networks.size}");
-                }
-                Divider(modifier = Modifier.fillMaxHeight().width(1.dp), color = Color.Black)
                 subnetDisplay(scan, data);
             }
         }
