@@ -1,13 +1,10 @@
 package window.servers
 
-import androidx.compose.foundation.ScrollState
-import androidx.compose.foundation.border
-import androidx.compose.foundation.hoverable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsHoveredAsState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
@@ -43,7 +40,8 @@ private fun listServers(servers: List<ServerInfo>, page: Pagination) {
         for (i in page.start..page.end) {
             val testInteract = remember { MutableInteractionSource() };
             val isHover by testInteract.collectIsHoveredAsState();
-            Text(modifier = Modifier.padding(6.dp).hoverable(testInteract, true), color = Color.White, text = " Ip: ${
+            var isClicked: Boolean by remember { mutableStateOf(false) }
+            Text(modifier = Modifier.padding(6.dp).hoverable(testInteract, true).clickable { isClicked = true }, color = Color.White, text = " Ip: ${
                 try {
                     servers[i].ip
                 } catch (e: Exception) {
@@ -52,6 +50,9 @@ private fun listServers(servers: List<ServerInfo>, page: Pagination) {
             }");
             if(isHover) {
                 Text(color = Color.White, fontFamily = FontFamily.Monospace, text = " Ports: ${servers[i].ports}")
+            }
+            if(isClicked) {
+                serverWindow(servers[i])
             }
         }
     }
