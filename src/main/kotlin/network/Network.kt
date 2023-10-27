@@ -34,7 +34,7 @@ fun deviceIp(): String {
 
 fun ping(ip: String): Ping {
     try {
-        val exist: Boolean = InetAddress.getByName(ip).isReachable(10);
+        val exist: Boolean = InetAddress.getByName(ip).isReachable(200);
         return Ping(ip, exist);
     } catch (e: Exception) {
         println(e)
