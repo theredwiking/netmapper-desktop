@@ -7,6 +7,7 @@ import java.io.Serializable
 import java.net.ConnectException
 import java.net.InetSocketAddress
 import java.net.Socket
+import java.net.SocketTimeoutException
 
 data class ServerInfo(val ip: String, val ports: List<Int>): Serializable;
 val serverScope = MainScope()
@@ -19,7 +20,7 @@ private fun portScan(ip: String): List<Int> {
         try {
             socket.connect(InetSocketAddress(ip, it), 500)
             result.add(it);
-        } catch (_: ConnectException) {} catch (e: Exception) {
+        } catch (_: ConnectException) {} catch (_: SocketTimeoutException) {} catch (e: Exception) {
             println("Timeout: $e")
         }
         socket.close()
