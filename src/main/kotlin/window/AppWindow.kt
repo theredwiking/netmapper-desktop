@@ -23,7 +23,7 @@ fun app() {
                 TopAppBar(
                     backgroundColor = Color(0xFF1D1E2C)
                 ) {
-                    navBar(onStartChange = { scan = it }, onData = { data = it });
+                    navBar(onStartChange = { scan = it }, onData = { data = it; scan = true });
                 }
             },
             backgroundColor = Color(0xFF1D1E2C)
