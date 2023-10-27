@@ -1,21 +1,35 @@
 package file
 
+import network.Ping
+import network.Vlan
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
 class OperationsKtTest {
+    // Easy to reuse data across test functions
+    private val active: List<Ping> = listOf(Ping("127.0.0.1", true));
+    private val vlan: List<Vlan> = listOf(Vlan(active, emptyList()));
+    private val data = SaveData(vlan, emptyList())
+
     @Test
     fun testWrite() {
-        val expected: Boolean = true;
-        assertEquals(expected, write("./test.nmf", SaveData(emptyList(), emptyList())))
+        assertTrue(write("./test.nmf", data))
     }
 
     @Test
     fun testRead() {
         val expected: Boolean = true;
-        val expectedData = SaveData(emptyList(), emptyList());
-        var actuallyData: SaveData? = null;
-        assertEquals(expected, read("./test.nmf") {actuallyData = it});
-        assertEquals(expectedData, actuallyData);
+        var actualData: SaveData? = null;
+        assertEquals(expected, read("./test.nmf") {actualData = it});
+        // Check if returned data is expected data save from above function
+        assertEquals(data, actualData);
+    }
+
+    @Test
+    fun testFailedRead() {
+        var actualData: SaveData? = null;
+        assertFalse(read("./tester.nmf") { actualData = it});
+        // Checks data function returns empty SaveData data class if function fails
+        assertEquals(SaveData(emptyList(), emptyList()), actualData);
     }
 }
