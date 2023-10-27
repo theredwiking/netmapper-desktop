@@ -19,7 +19,6 @@ private fun subnetInfo(vlans: List<Vlan>) {
         runScan { subnets = it; complete = true; };
     } else {
         if(subnets.isEmpty()) {
-            println(subnets)
             subnets = vlans
         }
         complete = true;
