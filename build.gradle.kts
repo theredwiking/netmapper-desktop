@@ -33,6 +33,9 @@ compose.desktop {
         mainClass = "MainKt"
 
         nativeDistributions {
+            linux {
+                iconFile.set(project.file("icon.png"))
+            }
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "netmapper"
             packageVersion = "1.0.0"
